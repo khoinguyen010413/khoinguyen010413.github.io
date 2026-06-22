@@ -6,7 +6,6 @@
     <title>Thế Giới Bóng Đá - World Cup</title>
     
     <style>
-        /* CSS Reset & Khởi tạo phong cách */
         * {
             margin: 0;
             padding: 0;
@@ -20,9 +19,8 @@
             line-height: 1.6;
         }
 
-        /* Thanh điều hướng (Header) */
         header {
-            background: linear-gradient(135deg, #8a1538 0%, #56042c 100%); /* Màu đỏ rượu đặc trưng WC */
+            background: linear-gradient(135deg, #8a1538 0%, #56042c 100%);
             color: white;
             padding: 15px 5%;
             display: flex;
@@ -32,12 +30,6 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .logo-area h1 {
@@ -63,14 +55,12 @@
             color: #dfb031;
         }
 
-        /* Container chính chứa nội dung */
         .container {
             max-width: 1100px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        /* Khu vực Giới thiệu (Ảnh & Chữ) */
         .intro-section {
             background: white;
             border-radius: 12px;
@@ -141,9 +131,8 @@
             border-top: 1px solid #eee;
         }
 
-        /* Khu vực Video ở giữa trang */
         .video-section {
-            background: #002f6c; /* Màu xanh dương bóng đá */
+            background: #002f6c;
             color: white;
             border-radius: 12px;
             padding: 40px 20px;
@@ -172,7 +161,6 @@
             outline: none;
         }
 
-        /* Dòng chữ cảnh báo cá độ */
         .warning-text {
             margin-top: 20px;
             padding: 12px;
@@ -187,7 +175,6 @@
             letter-spacing: 1px;
         }
 
-        /* Chân trang */
         footer {
             background-color: #222;
             color: #aaa;
@@ -218,16 +205,16 @@
         <section id="intro" class="intro-section">
             <h2 class="intro-title">Chào Mừng Đến Với Ngày Hội Bóng Đá Lớn Nhất Hành Tinh</h2>
             <p style="text-align: center; max-width: 800px; margin: 0 auto; color: #666;">
-                Nơi cập nhật những thông tin mới nhất, lịch thi đấu kịch tính và những khoảnh khắc bùng nổ không thể nào quên của các đội tuyển siêu sao trên toàn thế giới.
+                Nơi cập nhật những thông tin mới nhất, lịch thi đấu kịch tính và những khoảnh khắc bùng nổ không thể nào quên.
             </p>
             
             <div class="image-gallery">
                 <div class="img-card">
-                    <img src="wc.jfif" alt="Giới thiệu World Cup">
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600" alt="World Cup">
                     <div class="img-caption">Cúp Vàng Danh Giá World Cup</div>
                 </div>
                 <div class="img-card">
-                    <img src="lichthidau.png" alt="Lịch thi đấu World Cup">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600" alt="Lịch thi đấu">
                     <div class="img-caption">Lịch Thi Đấu & Sơ Đồ Vòng Loại</div>
                 </div>
             </div>
@@ -235,12 +222,12 @@
 
         <section id="video" class="video-section">
             <h2>KHOẢNH KHẮC ẤN TƯỢNG</h2>
-            <p style="margin-bottom: 25px; opacity: 0.9;">Cùng thưởng thức những pha bóng siêu kinh điển và không khí sôi động.</p>
+            <p style="margin-bottom: 25px; opacity: 0.9;">Cùng thưởng thức những pha bóng siêu kinh điển.</p>
             
             <div class="video-wrapper">
-                <video controls poster="wc.jfif">
-                    <source src="japanvshalan.mp4" type="video/mp4">
-                    Trình duyệt của bạn không hỗ trợ thẻ phát video trực tiếp.
+                <video controls playsinline>
+                    <source src="./japanvshalan.mp4" type="video/mp4">
+                    Trình duyệt của bạn không hỗ trợ thẻ phát video.
                 </video>
             </div>
 
@@ -252,7 +239,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Trang Web Hâm Mộ Bóng Đá World Cup. Được thiết kế trực quan và hiện đại.</p>
+        <p>&copy; 2026 Trang Web Hâm Mộ Bóng Đá World Cup.</p>
     </footer>
 
 </body>
