@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khoi Nguyen</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0d0d0d;
+    color: #f0ece4;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .blob1, .blob2 {
+    position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
+  }
+  .blob1 { width: 400px; height: 400px; background: rgba(83,74,183,0.25); top: -100px; right: -100px; }
+  .blob2 { width: 300px; height: 300px; background: rgba(29,158,117,0.18); bottom: -50px; left: -50px; }
+  .container { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem; position: relative; z-index: 1; }
+  .hero { text-align: center; padding: 4rem 0 3rem; }
+  .avatar {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: linear-gradient(135deg, #534AB7, #1D9E75);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+    color: #fff; margin: 0 auto 1.5rem;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+  .name {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 6vw, 3rem);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+    background: linear-gradient(90deg, #f0ece4, #9F97E0);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .tagline {
+    font-size: 1rem; color: rgba(240,236,228,0.45); margin-top: 0.75rem;
+    font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 1.5rem; }
+  .badge {
+    font-size: 12px; padding: 5px 14px;
+    border-radius: 999px; font-weight: 500; letter-spacing: 0.03em;
+    border: 0.5px solid;
+  }
+  .badge-purple { background: rgba(83,74,183,0.2); color: #AFA9EC; border-color: rgba(83,74,183,0.4); }
+  .badge-teal   { background: rgba(29,158,117,0.2); color: #5DCAA5; border-color: rgba(29,158,117,0.4); }
+  .badge-amber  { background: rgba(186,117,23,0.2); color: #FAC775; border-color: rgba(186,117,23,0.4); }
+  .divider { border: none; border-top: 0.5px solid rgba(240,236,228,0.1); margin: 2.5rem 0; }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(240,236,228,0.35); margin-bottom: 1rem;
+  }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .info-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1rem 1.25rem;
+  }
+  .info-label { font-size: 11px; color: rgba(240,236,228,0.35); margin-bottom: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .info-value { font-size: 1rem; font-weight: 500; color: #f0ece4; }
+  .interests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+  .interest-item {
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 0.9rem 1rem;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: rgba(240,236,228,0.75);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .interest-item:hover { background: rgba(83,74,183,0.12); border-color: rgba(83,74,183,0.3); color: #f0ece4; }
+  .interest-icon { font-size: 18px; }
+  .footer {
+    text-align: center; padding-top: 3rem;
+    font-size: 12px; color: rgba(240,236,228,0.2); letter-spacing: 0.04em;
+  }
+
+  /* ===== GAME BAN SUNG ===== */
+  #game-section {
+    margin-top: 1rem;
+  }
+  #gameCanvas {
+    display: block;
+    margin: 0 auto;
+    background: #0a0a1a;
+    border: 1px solid rgba(83,74,183,0.4);
+    border-radius: 12px;
+    cursor: crosshair;
+  }
+  .game-ui {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0.6rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .game-ui span { color: rgba(240,236,228,0.6); }
+  .game-ui strong { color: #AFA9EC; font-size: 16px; }
+  #startBtn {
+    display: block; margin: 12px auto 0;
+    padding: 8px 28px;
+    background: rgba(83,74,183,0.25);
+    color: #AFA9EC;
+    border: 0.5px solid rgba(83,74,183,0.5);
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #startBtn:hover { background: rgba(83,74,183,0.4); }
+</style>
+</head>
+<body>
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div class="container">
+
+  <!-- TRANG CA NHAN -->
+  <div class="hero">
+    <div class="avatar">KN</div>
+    <div class="name">Khoi Nguyen</div>
+    <div class="tagline">Trang cá nhân</div>
+    <div class="badges">
+      <span class="badge badge-purple">13 tuổi</span>
+      <span class="badge badge-teal">Đà Nẵng 🌊</span>
+      <span class="badge badge-amber">Student</span>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section-title">Thông tin</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-label">Tên đầy đủ</div>
+      <div class="info-value">Khoi Nguyen</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Tuổi</div>
+      <div class="info-value">13 tuổi</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Sống ở</div>
+      <div class="info-value">Đà Nẵng, Việt Nam</div>
+    </div>
+    <div class="info-card">
+      <div class="info-label">Trạng thái</div>
+      <div class="info-value">Đang đi học 📚</div>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="section-title">Sở thích</div>
+  <div class="interests-grid">
+    <div class="interest-item"><span class="interest-icon">🎮</span> Chơi game</div>
+    <div class="interest-item"><span class="interest-icon">💻</span> Máy tính</div>
+    <div class="interest-item"><span class="interest-icon">🌐</span> Lướt web</div>
+    <div class="interest-item"><span class="interest-icon">🎵</span> Nghe nhạc</div>
+    <div class="interest-item"><span class="interest-icon">⚽</span> Thể thao</div>
+    <div class="interest-item"><span class="interest-icon">✏️</span> Học bài</div>
+  </div>
+  <hr class="divider">
+
+  <!-- GAME BAN SUNG -->
+  <div class="section-title">🎮 Trò chơi bắn súng</div>
+  <div id="game-section">
+    <div class="game-ui">
+      <div><span>Điểm: </span><strong id="scoreDisplay">0</strong></div>
+      <div><span>Mạng: </span><strong id="livesDisplay">❤️❤️❤️</strong></div>
+      <div><span>Wave: </span><strong id="waveDisplay">1</strong></div>
+    </div>
+    <canvas id="gameCanvas" width="640" height="360"></canvas>
+    <button id="startBtn">▶ Bắt đầu chơi</button>
+  </div>
+
+  <hr class="divider">
+  <div class="footer">Made with ❤️ by Khoi Nguyen · Đà Nẵng, Việt Nam</div>
+</div>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const startBtn = document.getElementById('startBtn');
+
+  // Thêm mảng items quản lý vật phẩm rơi và các bộ đếm thời gian buff (timers)
+  let player, bullets, enemies, items, score, lives, wave, running, animId, keys, lastEnemy;
+  let buffs = { speedTimer: 0, multishotTimer: 0 };
+
+  function init() {
+    player = { x: 300, y: 310, w: 36, h: 36, baseSpeed: 5, speed: 5 };
+    bullets = [];
+    enemies = [];
+    items = []; // Làm sạch danh sách vật phẩm khi bắt đầu chơi lại
+    buffs = { speedTimer: 0, multishotTimer: 0 }; // Reset thời gian buff
+    score = 0; lives = 3; wave = 1; running = true;
+    lastEnemy = 0;
+    keys = {};
+    updateLivesDisplay();
+    update();
+  }
+
+  function updateLivesDisplay() {
+    document.getElementById('livesDisplay').textContent = '❤️'.repeat(Math.max(0, lives));
+  }
+
+  function spawnEnemy() {
+    const x = Math.random() * (canvas.width - 30);
+    const speed = 1 + wave * 0.4 + Math.random();
+    enemies.push({ x, y: -30, w: 28, h: 28, speed, hp: 1 });
+  }
+
+  // Hàm tạo vật phẩm ngẫu nhiên khi quái chết (tỉ lệ 25%)
+  function maybeSpawnItem(x, y) {
+    if (Math.random() > 0.25) return; // 75% không rơi gì cả
+    
+    const types = ['speed', 'multishot', 'heal'];
+    const type = types[Math.floor(Math.random() * types.length)];
+    let color, label;
+
+    if (type === 'speed') { color = '#5DCAA5'; label = 'S'; }      // Xanh lá - Tăng tốc
+    else if (type === 'multishot') { color = '#FAC775'; label = 'M'; } // Vàng - Bắn 5 tia
+    else if (type === 'heal') { color = '#E15554'; label = '❤️'; }     // Đỏ - Hồi máu
+
+    items.push({ x, y, w: 20, h: 20, speed: 2, type, color, label });
+  }
+
+  function drawPlayer() {
+    // Thân tàu (Đổi màu nếu đang có buff đặc biệt để tăng trải nghiệm thị giác)
+    if (buffs.multishotTimer > 0) ctx.fillStyle = '#FAC775';
+    else if (buffs.speedTimer > 0) ctx.fillStyle = '#5DCAA5';
+    else ctx.fillStyle = '#534AB7';
+
+    ctx.beginPath();
+    ctx.roundRect(player.x - player.w/2, player.y - player.h/2, player.w, player.h, 6);
+    ctx.fill();
+
+    // Nòng súng
+    ctx.fillStyle = '#AFA9EC';
+    ctx.fillRect(player.x - 4, player.y - player.h/2 - 12, 8, 16);
+    // Mắt
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(player.x - 9, player.y - 8, 7, 7);
+    ctx.fillRect(player.x + 2, player.y - 8, 7, 7);
+    ctx.fillStyle = '#0d0d0d';
+    ctx.fillRect(player.x - 7, player.y - 6, 4, 4);
+    ctx.fillRect(player.x + 4, player.y - 6, 4, 4);
+  }
+
+  function drawBullet(b) {
+    ctx.fillStyle = b.color || '#FAC775';
+    ctx.shadowColor = ctx.fillStyle;
+    ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.ellipse(b.x, b.y, 3, 7, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  function drawEnemy(e) {
+    ctx.fillStyle = '#D85A30';
+    ctx.beginPath();
+    ctx.roundRect(e.x, e.y, e.w, e.h, 5);
+    ctx.fill();
+    // Mắt
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(e.x+4, e.y+6, 6, 6);
+    ctx.fillRect(e.x+e.w-10, e.y+6, 6, 6);
+    ctx.fillStyle = '#0d0d0d';
+    ctx.fillRect(e.x+6, e.y+8, 3, 3);
+    ctx.fillRect(e.x+e.w-8, e.y+8, 3, 3);
+    // Miệng
+    ctx.strokeStyle = '#0d0d0d';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(e.x+e.w/2, e.y+e.h-8, 5, 0, Math.PI);
+    ctx.stroke();
+  }
+
+  // Hàm vẽ các vật phẩm đang rơi
+  function drawItem(item) {
+    ctx.fillStyle = item.color;
+    ctx.shadowColor = item.color;
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.roundRect(item.x - item.w/2, item.y - item.h/2, item.w, item.h, 5);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Vẽ text/icon hiển thị loại buff lên ô vật phẩm
+    ctx.fillStyle = '#0d0d0d';
+    ctx.font = 'bold 11px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(item.label, item.x, item.y);
+  }
+
+  function drawBg() {
+    ctx.fillStyle = '#0a0a1a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Stars
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    for(let i=0;i<40;i++){
+      ctx.fillRect((i*137)%canvas.width, (i*97+score)%canvas.height, 1.5, 1.5);
+    }
+    // Ground
+    ctx.fillStyle = 'rgba(83,74,183,0.2)';
+    ctx.fillRect(0, canvas.height-30, canvas.width, 30);
+    ctx.strokeStyle = 'rgba(83,74,183,0.5)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height-30);
+    ctx.lineTo(canvas.width, canvas.height-30);
+    ctx.stroke();
+
+    // Hiển thị thanh thời gian hiệu lực của buff góc trên màn hình (nếu đang hoạt động)
+    let barY = 15;
+    if (buffs.speedTimer > 0) {
+      ctx.fillStyle = '#5DCAA5';
+      ctx.fillRect(15, barY, buffs.speedTimer * 0.4, 6);
+      barY += 12;
+    }
+    if (buffs.multishotTimer > 0) {
+      ctx.fillStyle = '#FAC775';
+      ctx.fillRect(15, barY, buffs.multishotTimer * 0.4, 6);
+    }
+  }
+
+  let shootCooldown = 0;
+  function update() {
+    if (!running) return;
+    animId = requestAnimationFrame(update);
+
+    // Xử lý đếm ngược thời gian buff hiệu lực
+    if (buffs.speedTimer > 0) {
+      buffs.speedTimer--;
+      player.speed = player.baseSpeed * 1.6; // Nhân tốc độ di chuyển
+    } else {
+      player.speed = player.baseSpeed;
+    }
+    if (buffs.multishotTimer > 0) buffs.multishotTimer--;
+
+    // Di chuyển người chơi
+    if ((keys['ArrowLeft']||keys['a']) && player.x > player.w/2) player.x -= player.speed;
+    if ((keys['ArrowRight']||keys['d']) && player.x < canvas.width - player.w/2) player.x += player.speed;
+
+    // Tự động bắn súng
+    shootCooldown--;
+    if (shootCooldown <= 0) {
+      const startY = player.y - player.h/2 - 12;
+      
+      if (buffs.multishotTimer > 0) {
+        // Chế độ bắn 5 viên cùng 1 lúc theo các hướng chéo góc chân thực
+        bullets.push({ x: player.x, y: startY, vx: 0, vy: -9, color: '#FAC775' });       // Thẳng giữa
+        bullets.push({ x: player.x, y: startY, vx: -2, vy: -8.5, color: '#FAC775' });   // Chếch trái ít
+        bullets.push({ x: player.x, y: startY, vx: 2, vy: -8.5, color: '#FAC775' });    // Chếch phải ít
+        bullets.push({ x: player.x, y: startY, vx: -4, vy: -7.5, color: '#FAC775' });   // Chếch trái rộng
+        bullets.push({ x: player.x, y: startY, vx: 4, vy: -7.5, color: '#FAC775' });    // Chếch phải rộng
+      } else {
+        // Chế độ bắn 1 viên cơ bản ban đầu
+        bullets.push({ x: player.x, y: startY, vx: 0, vy: -9, color: '#FAC775' });
+      }
+      shootCooldown = 18;
+    }
+
+    // Di chuyển đạn theo vector vx, vy
+    bullets.forEach(b => {
+      b.x += b.vx;
+      b.y += b.vy;
+    });
+    bullets = bullets.filter(b => b.y > 0 && b.x > 0 && b.x < canvas.width);
+
+    // Quái xuất hiện
+    const now = Date.now();
+    const interval = Math.max(400, 1200 - wave * 80);
+    if (now - lastEnemy > interval) { spawnEnemy(); lastEnemy = now; }
+
+    // Di chuyển quái vật
+    enemies.forEach(e => e.y += e.speed);
+
+    // Di chuyển vật phẩm rơi buff
+    items.forEach(item => item.y += item.speed);
+    items = items.filter(item => item.y < canvas.height);
+
+    // Va chạm đạn với quái vật
+    bullets = bullets.filter(b => {
+      let hit = false;
+      enemies = enemies.filter(e => {
+        if (b.x > e.x && b.x < e.x+e.w && b.y > e.y && b.y < e.y+e.h) {
+          hit = true; 
+          score += 10; 
+          maybeSpawnItem(e.x + e.w/2, e.y + e.h/2); // Gọi rơi vật phẩm tại vị trí quái chết
+          return false;
+        }
+        return true;
+      });
+      return !hit;
+    });
+
+    // Va chạm giữa người chơi và vật phẩm rơi (Item pickup)
+    items = items.filter(item => {
+      const distX = Math.abs(player.x - item.x);
+      const distY = Math.abs(player.y - item.y);
+      
+      // Kiểm tra va chạm hộp (bounding box) đơn giản
+      if (distX < (player.w/2 + item.w/2) && distY < (player.h/2 + item.h/2)) {
+        // Kích hoạt tính năng buff theo loại hình
+        if (item.type === 'speed') {
+          buffs.speedTimer = 350; // Duy trì buff tốc độ khoảng 6 giây (350 khung hình)
+        } else if (item.type === 'multishot') {
+          buffs.multishotTimer = 300; // Duy trì bắn 5 tia khoảng 5 giây
+        } else if (item.type === 'heal') {
+          if (lives < 5) { // Giới hạn hồi máu tối đa không vượt quá 5 tim
+            lives++;
+            updateLivesDisplay();
+          }
+        }
+        return false; // Ăn vật phẩm thành công -> xóa khỏi màn hình
+      }
+      return true;
+    });
+
+    // Quái vật chạm đáy biên dưới
+    enemies = enemies.filter(e => {
+      if (e.y > canvas.height - 30) {
+        lives--;
+        updateLivesDisplay();
+        if (lives <= 0) { gameOver(); return false; }
+        return false;
+      }
+      return true;
+    });
+
+    // Tăng cấp độ wave
+    if (score >= wave * 150) wave++;
+
+    document.getElementById('scoreDisplay').textContent = score;
+    document.getElementById('waveDisplay').textContent = wave;
+
+    // Tiến hành Render đồ hoạ màn hình game
+    drawBg();
+    bullets.forEach(drawBullet);
+    enemies.forEach(drawEnemy);
+    items.forEach(drawItem); // Vẽ danh sách vật phẩm
+    drawPlayer();
+  }
+
+  function gameOver() {
+    running = false;
+    cancelAnimationFrame(animId);
+    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = '#f0ece4';
+    ctx.font = 'bold 36px Syne, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2 - 20);
+    ctx.font = '18px DM Sans, sans-serif';
+    ctx.fillStyle = '#AFA9EC';
+    ctx.fillText('Điểm: ' + score, canvas.width/2, canvas.height/2 + 20);
+    startBtn.textContent = '🔄 Chơi lại';
+    startBtn.style.display = 'block';
+  }
+
+  document.addEventListener('keydown', e => keys[e.key] = true);
+  document.addEventListener('keyup', e => keys[e.key] = false);
+
+  // Điều khiển chạm vuốt trên di động
+  let touchX = null;
+  canvas.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const dx = e.touches[0].clientX - touchX;
+    player.x = Math.max(player.w/2, Math.min(canvas.width - player.w/2, player.x + dx));
+    touchX = e.touches[0].clientX;
+  });
+
+  startBtn.addEventListener('click', () => {
+    startBtn.style.display = 'none';
+    init();
+  });
+
+  // Màn hình chờ ban đầu
+  drawBg();
+  ctx.fillStyle = 'rgba(240,236,228,0.5)';
+  ctx.font = '16px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Nhấn "Bắt đầu chơi" để chơi', canvas.width/2, canvas.height/2);
+  ctx.font = '13px DM Sans, sans-serif';
+  ctx.fillStyle = 'rgba(240,236,228,0.3)';
+  ctx.fillText('← → hoặc A D để di chuyển', canvas.width/2, canvas.height/2 + 28);
+</script>
+</body>
+</html>

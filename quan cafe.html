@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHOI CAFE - View Biển Đà Nẵng</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  :root {
+    --bg-color: #0f111a;
+    --text-color: #ffffff;
+    --primary-color: #534AB7;
+    --accent-color: #1D9E75;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+  }
+
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Times New Roman', Times, serif; 
+  }
+  
+  body { background: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+
+  /* 1. HERO BANNER */
+  .hero {
+    position: relative; height: 50vh; min-height: 350px;
+    background: linear-gradient(rgba(15, 17, 26, 0.6), #0f111a), 
+                url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1200&auto=format&fit=crop') no-repeat center center/cover;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 5rem); font-weight: 800;
+    background: linear-gradient(90deg, #534AB7, #1D9E75); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    font-style: italic;
+  }
+  .hero p { font-size: clamp(1rem, 2.5vw, 1.4rem); color: #FAC775; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+
+  .container { max-width: 1000px; margin: 0 auto; padding: 3rem 1.5rem; position: relative; z-index: 2; }
+
+  /* 2. GIỚI THIỆU QUÁN */
+  .intro-section { text-align: center; margin-bottom: 4rem; }
+  .section-title {
+    font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem;
+    position: relative; display: inline-block; padding-bottom: 8px;
+    color: #fff;
+    font-style: italic;
+  }
+  .section-title::after {
+    content: ''; position: absolute; bottom: 0; left: 25%; width: 50%; height: 3px;
+    background: linear-gradient(90deg, #534AB7, #1D9E75); border-radius: 99px;
+  }
+  .intro-text { color: rgba(255, 255, 255, 0.8); line-height: 1.8; max-width: 730px; margin: 1.5rem auto 0; font-size: 18px; }
+
+  /* 3. ALBUM HÌNH ẢNH KHÔNG GIAN */
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 4rem; }
+  .gallery-item {
+    position: relative; border-radius: 16px; overflow: hidden; height: 240px;
+    border: 1px solid var(--card-border); background: #222;
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .gallery-item:hover img { transform: scale(1.08); }
+  .gallery-desc {
+    position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9)); font-size: 16px; font-style: italic; color: #fff;
+  }
+
+  /* 4. MENU THỰC ĐƠN */
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; margin-bottom: 4rem; }
+  @media(max-width: 480px) { .menu-grid { grid-template-columns: 1fr; } }
+  
+  .menu-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 1.8rem; backdrop-filter: blur(10px); }
+  .menu-card h3 { font-size: 1.5rem; color: #FAC775; margin-bottom: 1.2rem; border-bottom: 1px dashed var(--card-border); padding-bottom: 8px; font-style: italic; }
+  
+  .menu-item { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .item-name { font-weight: 500; font-size: 17px; color: #fff; }
+  .item-dots { flex: 1; border-bottom: 1px dashed rgba(255,255,255,0.2); margin: 0 10px; }
+  .item-price { color: #5DCAA5; font-weight: 700; font-size: 17px; }
+
+  /* 5. THÔNG TIN LIÊN HỆ */
+  .contact-box {
+    background: linear-gradient(135deg, rgba(83,74,183,0.15), rgba(29,158,117,0.15));
+    border: 1px solid var(--card-border); border-radius: 24px; padding: 2.5rem 2rem; text-align: center;
+  }
+  .social-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 1.8rem; flex-wrap: wrap; }
+  .btn {
+    padding: 12px 26px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; gap: 8px; color: #fff; transition: all 0.3s ease;
+  }
+  .btn-phone { background: #1D9E75; box-shadow: 0 4px 14px rgba(29, 158, 117, 0.4); }
+  .btn-phone:hover { background: #157556; transform: translateY(-3px); }
+  .btn-fb { background: #1877F2; box-shadow: 0 4px 14px rgba(24, 119, 242, 0.4); }
+  .btn-fb:hover { background: #115cb9; transform: translateY(-3px); }
+  .btn-tt { background: #000; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-tt:hover { box-shadow: 2px 2px #00f2fe, -2px -2px #ff0050; transform: translateY(-3px); }
+
+  .footer { text-align: center; margin-top: 4rem; font-size: 14px; color: rgba(255,255,255,0.3); letter-spacing: 0.5px; }
+
+  /* NÚT ĐIỀU KHIỂN NHẠC GÓC MÀN HÌNH - ĐÃ ĐỔI THEO STYLE PHÁT NHẠC XỊN SÒ */
+  .music-control {
+    position: fixed; bottom: 20px; left: 20px; z-index: 999;
+    background: rgba(15, 17, 26, 0.9); border: 1px solid rgba(29, 158, 117, 0.5);
+    padding: 12px 20px; border-radius: 50px; color: #fff; font-size: 14px;
+    display: flex; align-items: center; gap: 12px; cursor: pointer;
+    backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+  }
+  .music-control:hover { transform: scale(1.05); border-color: var(--primary-color); }
+  .music-wave { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+  .music-wave span { width: 3px; background-color: #1D9E75; animation: bounce 1s ease-get-type infinite alternate; transform-origin: bottom; }
+  .music-wave span:nth-child(2) { animation-delay: 0.2s; height: 100%; }
+  .music-wave span:nth-child(3) { animation-delay: 0.4s; height: 60%; }
+  
+  @keyframes bounce {
+    0% { transform: scaleY(0.3); }
+    100% { transform: scaleY(1.1); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NÚT PHÁT NHẠC CHILL VIỆT NAM -->
+  <div class="music-control" id="musicBtn" onclick="toggleMusic()">
+    <div class="music-wave" id="musicWave">
+      <span style="height: 60%;"></span>
+      <span style="height: 100%;"></span>
+      <span style="height: 40%;"></span>
+    </div>
+    <i class="fa-solid fa-compact-disc" id="musicIcon"></i>
+    <span id="musicText">Click để bật Nhạc Chill Việt Nam 🎵</span>
+  </div>
+
+  <!-- THÈ AUDIO CHỨA LINK PLAYLIST LOFI CHILL VIỆT NAM (ĐÃ CẬP NHẬT) -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 1. HERO BANNER ĐẦU TRANG -->
+  <div class="hero">
+    <h1>KHOI CAFE</h1>
+    <p>Hương Vị Đà Nẵng · View Biển Tuyệt Đẹp</p>
+  </div>
+
+  <div class="container">
+    
+    <!-- 2. PHẦN GIỚI THIỆU -->
+    <div class="intro-section">
+      <h2 class="section-title">Khám Phá Quán</h2>
+      <p class="intro-text">
+        Chào mừng đến với KHOI CAFE, điểm hẹn lý tưởng tại thành phố biển Đà Nẵng năng động! Tọa lạc bên bờ biển xanh cát trắng, chúng tôi tự hảo mang đến một không gian hiện đại, thoáng đãng cùng những ly cà phê đặc sản đậm đà. Đến để thư giãn, làm việc hay ngắm hoàng hôn buông xuống, KHOI CAFE luôn sẵn sàng chào đón bạn.
+      </p>
+    </div>
+
+    <!-- 3. BỘ SƯU TẬP ẢNH (GALLERY) -->
+    <h2 class="section-title" style="margin-bottom: 1.5rem;">Không Gian Quán</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=500" alt="Không gian quán">
+        <div class="gallery-desc">Góc view cực chill đón gió tự nhiên</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500" alt="Tách cà phê">
+        <div class="gallery-desc">Hương vị cà phê nguyên chất, đậm đà</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500" alt="Bàn nước">
+        <div class="gallery-desc">Không gian hiện đại, thích hợp họp mặt bè bạn</div>
+      </div>
+    </div>
+
+    <!-- 4. THỰC ĐƠN (MENU) -->
+    <h2 class="section-title" style="margin-bottom: 1.5rem;">Gợi Ý Thực Đơn</h2>
+    <div class="menu-grid">
+      <!-- Nhóm Cà Phê -->
+      <div class="menu-card">
+        <h3>☕ Cà Phê Đặc Sản</h3>
+        <div class="menu-item">
+          <span class="item-name">Cà Phê Muối KHOI</span>
+          <div class="item-dots"></div>
+          <span class="item-price">55.000đ</span>
+        </div>
+        <div class="menu-item">
+          <span class="item-name">Cà Phê Sữa Đá Sài Gòn</span>
+          <div class="item-dots"></div>
+          <span class="item-price">35.000đ</span>
+        </div>
+        <div class="menu-item">
+          <span class="item-name">Bạc Xỉu Sương Sáo</span>
+          <div class="item-dots"></div>
+          <span class="item-price">45.000đ</span>
+        </div>
+        <div class="menu-item">
+          <span class="item-name">Cold Brew Cam Vàng</span>
+          <div class="item-dots"></div>
+          <span class="item-price">60.000đ</span>
+        </div>
+      </div>
+
+      <!-- Nhóm Trà & Bánh -->
+      <div class="menu-card">
+        <h3>🍰 Trà Trái Cây & Bánh Ngọt</h3>
+        <div class="menu-item">
+          <span class="item-name">Trà Măng Cụt Hoa Atiso</span>
+          <div class="item-dots"></div>
+          <span class="item-price">58.000đ</span>
+        </div>
+        <div class="menu-item">
+          <span class="item-name">Trà Sữa Thạch Ngọc Trai</span>
+          <div class="item-dots"></div>
+          <span class="item-price">48.000đ</span>
+        </div>
+        <div class="menu-item">
+          <span class="item-name">Bánh Croissant Bơ Tỏi</span>
+          <div class="item-dots"></div>
+          <span class="item-price">35.000đ</span>
+        </div>
+        <div class="menu-item">
+          <span class="item-name">Bánh Tiramisu Truyền Thống</span>
+          <div class="item-dots"></div>
+          <span class="item-price">50.000đ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. KHU VỰC LIÊN HỆ -->
+    <div class="contact-box">
+      <h2 class="section-title" style="font-size: 1.5rem;">Ghé Thăm KHOI CAFE Nhé!</h2>
+      <p style="margin-top: 10px; color: rgba(255,255,255,0.7); font-size: 15px;">Địa chỉ: Đường Võ Nguyên Giáp, Phước Mỹ, Sơn Trà, Đà Nẵng</p>
+      <p style="color: rgba(255,255,255,0.7); font-size: 15px; margin-top: 4px;">Giờ mở cửa: 06:30 AM - 22:30 PM</p>
+      
+      <div class="social-buttons">
+        <a href="tel:01234567890" class="btn btn-phone"><i class="fa-solid fa-phone"></i> Hotline: 01234567890</a>
+        <a href="https://www.facebook.com/profile.php?id=61572561323457&sk=about" target="_blank" class="btn btn-fb"><i class="fa-brands fa-facebook-f"></i> Fanpage</a>
+        <a href="https://www.tiktok.com/@nguyenn.1413" target="_blank" class="btn btn-tt"><i class="fa-brands fa-tiktok"></i> TikTok Quán</a>
+      </div>
+    </div>
+
+    <!-- CHÂN TRANG -->
+    <div class="footer">
+      &copy; 2026 KHOI CAFE Đà Nẵng · Thiết kế bởi Khôi Nguyên
+    </div>
+
+  </div>
+
+  <script>
+    const audio = document.getElementById("bgMusic");
+    const musicIcon = document.getElementById("musicIcon");
+    const musicText = document.getElementById("musicText");
+    const musicWave = document.getElementById("musicWave");
+    let hasPlayed = false;
+
+    // Sóng nhạc dừng lúc ban đầu
+    musicWave.style.display = "none";
+
+    // Click bất cứ đâu để kích hoạt phát nhạc lần đầu
+    document.addEventListener("click", function() {
+      if (!hasPlayed) {
+        audio.play().then(() => {
+          hasPlayed = true;
+          musicIcon.classList.add("fa-spin");
+          musicText.innerText = "Đang chạy Playlist Lofi Việt Nam...";
+          musicWave.style.display = "flex";
+        }).catch(error => console.log("Autoplay bị chặn, cần tương tác tiếp:", error));
+      }
+    });
+
+    // Bấm trực tiếp vào thanh điều khiển để Bật/Tắt chủ động
+    function toggleMusic() {
+      if (audio.paused) {
+        audio.play();
+        musicIcon.classList.add("fa-spin");
+        musicText.innerText = "Đang chạy Playlist Lofi Việt Nam...";
+        musicWave.style.display = "flex";
+      } else {
+        audio.pause();
+        musicIcon.classList.remove("fa-spin");
+        musicText.innerText = "Đã tắt nhạc.";
+        musicWave.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>

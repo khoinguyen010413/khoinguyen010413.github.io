@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khoi Nguyen - Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  :root {
+    --bg-color: #0d0d0d;
+    --text-color: #f0ece4;
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --divider-color: rgba(240, 236, 228, 0.1);
+    --sub-text: rgba(240, 236, 228, 0.45);
+    --title-text: rgba(240, 236, 228, 0.35);
+    --ripple-color: rgba(83, 74, 183, 0.4);
+    --stars-opacity: 1; /* Hiện sao ở nền tối */
+  }
+
+  [data-theme="light"] {
+    --bg-color: #f5f5f7;
+    --text-color: #1d1d1f;
+    --card-bg: rgba(0, 0, 0, 0.04);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --divider-color: rgba(0, 0, 0, 0.1);
+    --sub-text: rgba(0, 0, 0, 0.55);
+    --title-text: rgba(0, 0, 0, 0.45);
+    --ripple-color: rgba(29, 158, 117, 0.4);
+    --stars-opacity: 0.1; /* Giảm độ sáng của sao khi bật nền sáng */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  /* Các đốm màu gradient nền */
+  .blob1, .blob2 {
+    position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
+  }
+  .blob1 { width: 400px; height: 400px; background: rgba(83,74,183,0.2); top: -100px; right: -100px; }
+  .blob2 { width: 300px; height: 300px; background: rgba(29,158,117,0.15); bottom: -50px; left: -50px; }
+  
+  /* CONTAINER CHỨA HIỆU ỨNG LẤP LÁNH */
+  #stars-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; opacity: var(--stars-opacity);
+    transition: opacity 0.5s ease;
+  }
+  .star {
+    position: absolute; background: #fff; border-radius: 50%;
+    box-shadow: 0 0 4px #fff, 0 0 8px #fff;
+    animation: blink var(--duration) ease-in-out infinite alternate;
+  }
+  @keyframes blink {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .theme-toggle {
+    position: absolute; top: 20px; right: 20px;
+    background: var(--card-bg); border: 0.5px solid var(--card-border);
+    color: var(--text-color); width: 40px; height: 40px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px;
+    z-index: 10;
+  }
+
+  .container { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem; position: relative; z-index: 1; }
+  .hero { text-align: center; padding: 2rem 0 2rem; }
+  
+  .avatar-container {
+    width: 100px; height: 100px; border-radius: 50%;
+    margin: 0 auto 1.5rem; padding: 3px;
+    background: linear-gradient(135deg, #534AB7, #1D9E75);
+    box-shadow: 0 8px 24px rgba(83, 74, 183, 0.2);
+  }
+  .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #222; }
+
+  .name {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 6vw, 3rem);
+    font-weight: 800; letter-spacing: -0.02em; line-height: 1.1;
+    background: linear-gradient(90deg, #534AB7, #1D9E75);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  
+  .tagline-container { height: 24px; margin-top: 0.75rem; }
+  .tagline {
+    font-size: 1rem; color: var(--sub-text);
+    font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase;
+    border-right: 2px solid #534AB7; padding-right: 5px;
+    animation: blinkCursor 0.75s step-end infinite;
+  }
+  @keyframes blinkCursor { from, to { border-color: transparent } 50% { border-color: #534AB7; } }
+
+  .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 1.2rem; }
+  .social-icon {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--card-bg);
+    border: 0.5px solid var(--card-border); color: var(--text-color);
+    display: flex; align-items: center; justify-content: center; text-decoration: none;
+    font-size: 16px; transition: all 0.3s ease;
+  }
+  .social-icon:hover { transform: translateY(-3px); color: #fff; }
+  .social-icon.fb:hover { background: #1877F2; border-color: #1877F2; }
+  .social-icon.tt:hover { background: #000000; border-color: #ff0050; box-shadow: 2px 2px #00f2fe, -2px -2px #ff0050; }
+
+  .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 1.5rem; }
+  .badge { font-size: 12px; padding: 5px 14px; border-radius: 999px; font-weight: 500; border: 0.5px solid; }
+  .badge-purple { background: rgba(83,74,183,0.2); color: #AFA9EC; border-color: rgba(83,74,183,0.4); }
+  .badge-teal   { background: rgba(29,158,117,0.2); color: #5DCAA5; border-color: rgba(29,158,117,0.4); }
+  .badge-amber  { background: rgba(186,117,23,0.2); color: #FAC775; border-color: rgba(186,117,23,0.4); }
+  
+  .divider { border: none; border-top: 0.5px solid var(--divider-color); margin: 2.5rem 0; }
+  
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--title-text); margin-bottom: 1rem;
+  }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .info-card { background: var(--card-bg); border: 0.5px solid var(--card-border); border-radius: 12px; padding: 1rem 1.25rem; }
+  .info-label { font-size: 11px; color: var(--title-text); margin-bottom: 4px; text-transform: uppercase; }
+  .info-value { font-size: 1rem; font-weight: 500; }
+  
+  .interests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+  .interest-item {
+    background: var(--card-bg); border: 0.5px solid var(--card-border);
+    border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 10px;
+    font-size: 14px; cursor: pointer; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent;
+  }
+  .interest-item:hover, .interest-item.active { background: rgba(83,74,183,0.15); border-color: rgba(83,74,183,0.5); transform: translateY(-2px); }
+  .interest-icon { font-size: 18px; }
+
+  .details-box { margin-top: 1.5rem; background: var(--card-bg); border: 0.5px solid var(--card-border); border-radius: 14px; padding: 1.25rem; display: none; }
+  .details-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #9F97E0; margin-bottom: 10px; text-transform: uppercase; }
+  .details-content { font-size: 14px; line-height: 1.6; }
+  
+  .details-img {
+    width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-top: 12px;
+    border: 0.5px solid var(--card-border);
+  }
+  
+  .details-list { list-style: none; }
+  .details-list li { margin-bottom: 6px; display: flex; justify-content: space-between; border-bottom: 0.5px dashed var(--divider-color); padding-bottom: 4px; }
+  .price-tag { color: #5DCAA5; font-weight: 500; }
+
+  /* Hiệu ứng chạm nền Ripple */
+  .click-effect {
+    position: fixed; border-radius: 50%; background: var(--ripple-color);
+    border: 1px solid rgba(255, 255, 255, 0.2); transform: translate(-50%, -50%);
+    pointer-events: none; z-index: 9999;
+    animation: rippleEffect 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  }
+  @keyframes rippleEffect {
+    0% { width: 0px; height: 0px; opacity: 1; }
+    100% { width: 80px; height: 80px; opacity: 0; }
+  }
+
+  .footer { text-align: center; padding-top: 3rem; font-size: 12px; color: var(--title-text); letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+
+<!-- Nền đốm màu và nền sao lấp lánh -->
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div id="stars-container"></div>
+
+<button class="theme-toggle" onclick="toggleTheme()">
+  <i class="fa-solid fa-moon" id="theme-icon"></i>
+</button>
+
+<div class="container">
+  <div class="hero">
+    <div class="avatar-container">
+      <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/avatar_vo_tri_a49436c5de.jpg" alt="Avatar" class="avatar-img">
+    </div>
+    
+    <div class="name">Khoi Nguyen</div>
+    
+    <div class="tagline-container">
+      <span class="tagline" id="typing-text"></span>
+    </div>
+
+    <div class="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61572561323457&sk=about" target="_blank" class="social-icon fb"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.tiktok.com/@nguyenn.1413" target="_blank" class="social-icon tt"><i class="fa-brands fa-tiktok"></i></a>
+    </div>
+
+    <div class="badges">
+      <span class="badge badge-purple">13 tuổi</span>
+      <span class="badge badge-teal">Đà Nẵng 🌊</span>
+      <span class="badge badge-amber">Student</span>
+    </div>
+  </div>
+  
+  <hr class="divider">
+  
+  <div class="section-title">Thông tin</div>
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Tên đầy đủ</div><div class="info-value">Khoi Nguyen</div></div>
+    <div class="info-card"><div class="info-label">Tuổi</div><div class="info-value">13 tuổi</div></div>
+    <div class="info-card"><div class="info-label">Sống ở</div><div class="info-value">Đà Nẵng, Việt Nam</div></div>
+    <div class="info-card"><div class="info-label">Trạng thái</div><div class="info-value">Đang đi học 📚</div></div>
+  </div>
+  
+  <hr class="divider">
+
+  <div class="section-title">Music Box</div>
+  <div style="margin-bottom: 2rem;">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSpwq3LiO?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
+  <hr class="divider">
+  
+  <div class="section-title">Sở thích</div>
+  <div class="interests-grid">
+    <div class="interest-item" id="btn-games" onclick="showContent('games')"><span class="interest-icon">🎮</span> Chơi game</div>
+    <div class="interest-item" id="btn-computer" onclick="showContent('computer')"><span class="interest-icon">💻</span> Máy tính</div>
+    <div class="interest-item" id="btn-web" onclick="showContent('web')"><span class="interest-icon">🌐</span> Lướt web</div>
+    <div class="interest-item" id="btn-music" onclick="showContent('music')"><span class="interest-icon">🎵</span> Nghe nhạc</div>
+    <div class="interest-item" id="btn-sports" onclick="showContent('sports')"><span class="interest-icon">⚽</span> Thể thao</div>
+    <div class="interest-item" id="btn-study" onclick="showContent('study')"><span class="interest-icon">✏️</span> Học bài</div>
+  </div>
+
+  <div class="details-box" id="detailsBox">
+    <div class="details-title" id="detailsTitle"></div>
+    <div class="details-content" id="detailsContent"></div>
+  </div>
+  
+  <hr class="divider">
+  
+  <div class="footer">Made with ❤️ by Khoi Nguyen · Đà Nẵng, Việt Nam</div>
+</div>
+
+<script>
+  const dataDetails = {
+    games: {
+      title: "🎮 Các tựa game hay chơi",
+      content: `Mình thường giải trí qua các tựa game như: <b>Roblox</b>, <b>Minecraft</b>, <b>CS2</b>, <b>Liên Quân Mobile</b>.<br>
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500" class="details-img" alt="Gaming">`
+    },
+    computer: {
+      title: "💻 Linh kiện & Giá tham khảo",
+      content: `<ul class="details-list">
+                  <li><span>RAM DDR4 / DDR5 (8GB - 16GB)</span> <span class="price-tag">~ 700k - 1.8tr</span></li>
+                  <li><span>Card đồ họa (VGA GTX/RTX)</span> <span class="price-tag">~ 3tr - 12tr+</span></li>
+                  <li><span>Ổ cứng SSD NVMe (512GB - 1TB)</span> <span class="price-tag">~ 800k - 2tr</span></li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=500" class="details-img" alt="PC Setup">`
+    },
+    web: {
+      title: "🌐 Sở thích lướt web",
+      content: "Không gian mạng yêu thích của mình là giải trí trên <b>TikTok</b>, giữ liên lạc trên <b>Facebook</b>, xem các video công nghệ trên <b>YouTube</b>."
+    },
+    music: {
+      title: "🎵 Gu âm nhạc",
+      content: "Mình cực kỳ thích nghe các thể loại <b>Nhạc trẻ</b> sôi động, các bài hát hot trend hiện nay và đôi khi là nhạc Lofi nhẹ nhàng."
+    },
+    sports: {
+      title: "⚽ Thể thao & Vận động",
+      content: "Để rèn luyện sức khỏe, mình thường xuyên tham gia chơi bộ môn <b>Cầu lông</b> 🏸 và đá bóng ⚽ cùng bạn bè vào những buổi chiều."
+    },
+    study: {
+      title: "✏️ Học tập & Thử thách",
+      content: "Mình rất chăm chỉ học bài, đặc biệt là thích tìm tòi, đào sâu và hay đặt câu hỏi thảo luận về các bài tập khó."
+    }
+  };
+
+  let currentActive = '';
+  function showContent(type) {
+    const box = document.getElementById('detailsBox');
+    const title = document.getElementById('detailsTitle');
+    const content = document.getElementById('detailsContent');
+    
+    if (currentActive === type) {
+      box.style.display = 'none';
+      document.getElementById('btn-' + type).classList.remove('active');
+      currentActive = '';
+      return;
+    }
+    
+    document.querySelectorAll('.interest-item').forEach(item => item.classList.remove('active'));
+    document.getElementById('btn-' + type).classList.add('active');
+    
+    if (dataDetails[type]) {
+      title.innerHTML = dataDetails[type].title;
+      content.innerHTML = dataDetails[type].content;
+      box.style.display = 'block';
+      currentActive = type;
+    }
+  }
+
+  const words = ["Học sinh lớp 7 📚", "Đam mê Máy Tính 💻", "Gamer Roblox & CS2 🎮", "Người con Đà Nẵng 🌊"];
+  let i = 0, timer;
+
+  function typingEffect() {
+    let word = words[i].split("");
+    var loopTyping = function() {
+      if (word.length > 0) {
+        document.getElementById('typing-text').innerHTML += word.shift();
+      } else {
+        setTimeout(deletingEffect, 2000); return false;
+      }
+      timer = setTimeout(loopTyping, 100);
+    };
+    loopTyping();
+  }
+
+  function deletingEffect() {
+    let word = words[i].split("");
+    var loopDeleting = function() {
+      if (word.length > 0) {
+        word.pop();
+        document.getElementById('typing-text').innerHTML = word.join("");
+      } else {
+        if (words.length > (i + 1)) i++; else i = 0;
+        setTimeout(typingEffect, 500); return false;
+      }
+      timer = setTimeout(loopDeleting, 50);
+    };
+    loopDeleting();
+  }
+  typingEffect();
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const icon = document.getElementById('theme-icon');
+    if (currentTheme === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+      icon.className = "fa-solid fa-moon";
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      icon.className = "fa-solid fa-sun";
+    }
+  }
+
+  // TẠO HỆ THỐNG NGÔI SAO NHẤP NHÁY (BLINK EFFECT)
+  function createStars() {
+    const container = document.getElementById('stars-container');
+    const starCount = 50; // Số lượng ngôi sao trên màn hình
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      
+      // Kích thước ngẫu nhiên từ 1px đến 3px
+      const size = Math.random() * 2 + 1;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      
+      // Vị trí ngẫu nhiên trên màn hình
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      
+      // Tốc độ nhấp nháy ngẫu nhiên từ 1s đến 3s
+      const duration = Math.random() * 2 + 1;
+      star.style.setProperty('--duration', `${duration}s`);
+      
+      container.appendChild(star);
+    }
+  }
+  createStars();
+
+  // Hiệu ứng chạm nền
+  document.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A' || e.target.button || e.target.closest('.interest-item') || e.target.closest('.theme-toggle')) return;
+    const ripple = document.createElement('div');
+    ripple.className = 'click-effect';
+    ripple.style.left = `${e.clientX}px`; ripple.style.top = `${e.clientY}px`;
+    document.body.appendChild(ripple);
+    setTimeout(() => { ripple.remove(); }, 600);
+  });
+</script>
+</body>
+</html>
