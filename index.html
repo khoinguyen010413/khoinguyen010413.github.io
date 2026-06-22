@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thế Giới Bóng Đá - World Cup</title>
+    <!-- Avatar cho tab trình duyệt -->
+    <link rel="icon" href="avatar.jfif" type="image/x-icon">
+    
+    <style>
+        /* CSS Reset & Khởi tạo phong cách */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Thanh điều hướng (Header) */
+        header {
+            background: linear-gradient(135deg, #8a1538 0%, #56042c 100%); /* Màu đỏ rượu đặc trưng WC */
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar-web {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #dfb031; /* Viền vàng */
+        }
+
+        .logo-area h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #dfb031;
+        }
+
+        /* Container chính chứa nội dung */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Khu vực Giới thiệu (Ảnh & Chữ) */
+        .intro-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .intro-title {
+            text-align: center;
+            color: #8a1538;
+            font-size: 28px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .intro-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #dfb031;
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .img-card {
+            background: #fafafa;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .img-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .img-card img:hover {
+            transform: scale(1.02);
+        }
+
+        .img-caption {
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #555;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        /* Khu vực Video ở giữa trang */
+        .video-section {
+            background: #002f6c; /* Màu xanh dương bóng đá */
+            color: white;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .video-section h2 {
+            margin-bottom: 20px;
+            color: #dfb031;
+        }
+
+        .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background: #000;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            outline: none;
+        }
+
+        /* Chân trang */
+        footer {
+            background-color: #222;
+            color: #aaa;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh tiêu đề điều hướng -->
+    <header>
+        <div class="logo-area">
+            <img src="avatar.jfif" alt="Avatar Web" class="avatar-web">
+            <h1>WORLD CUP 2026</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Trang Chủ</a></li>
+                <li><a href="#intro">Giới Thiệu</a></li>
+                <li><a href="#video">Khoảnh Khắc</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Nội dung chính -->
+    <div class="container">
+
+        <!-- Phần 1: Giới thiệu và hình ảnh -->
+        <section id="intro" class="intro-section">
+            <h2 class="intro-title">Chào Mừng Đến Với Ngày Hội Bóng Đá Lớn Nhất Hành Tinh</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto; color: #666;">
+                Nơi cập nhật những thông tin mới nhất, lịch thi đấu kịch tính và những khoảnh khắc bùng nổ không thể nào quên của các đội tuyển siêu sao trên toàn thế giới.
+            </p>
+            
+            <div class="image-gallery">
+                <!-- Ảnh giới thiệu World Cup (Cập nhật đường dẫn mới) -->
+                <div class="img-card">
+                    <img src="web/noi_dung/wc.jfif" alt="Giới thiệu World Cup">
+                    <div class="img-caption">Cúp Vàng Danh Giá World Cup</div>
+                </div>
+                <!-- Ảnh lịch thi đấu (Cập nhật đường dẫn mới) -->
+                <div class="img-card">
+                    <img src="web/noi_dung/lichthidau.png" alt="Lịch thi đấu World Cup">
+                    <div class="img-caption">Lịch Thi Đấu & Sơ Đồ Vòng Loại</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phần 2: Video ở giữa trang -->
+        <section id="video" class="video-section">
+            <h2>KHOẢNH KHẮC ẤN TƯỢNG</h2>
+            <p style="margin-bottom: 25px; opacity: 0.9;">Cùng thưởng thức những pha bóng siêu kinh điển và không khí sôi động.</p>
+            
+            <div class="video-wrapper">
+                <!-- Thẻ phát video cục bộ -->
+                <video controls poster="web/noi_dung/wc.jfif">
+                    <source src="japanvshalan.mp4" type="video/mp4">
+                    Trình duyệt của bạn không hỗ trợ thẻ phát video trực tiếp.
+                </video>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Chân trang -->
+    <footer>
+        <p>&copy; 2026 Trang Web Hâm Mộ Bóng Đá World Cup. Được thiết kế trực quan và hiện đại.</p>
+    </footer>
+
+</body>
+</html>
