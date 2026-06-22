@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thế Giới Bóng Đá - World Cup</title>
-    <!-- Avatar cho tab trình duyệt -->
-    <link rel="icon" href="avatar.jfif" type="image/x-icon">
     
     <style>
         /* CSS Reset & Khởi tạo phong cách */
@@ -40,14 +38,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-        }
-
-        .avatar-web {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #dfb031; /* Viền vàng */
         }
 
         .logo-area h1 {
@@ -182,6 +172,21 @@
             outline: none;
         }
 
+        /* Dòng chữ cảnh báo cá độ */
+        .warning-text {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: rgba(255, 69, 58, 0.15);
+            border: 1px solid #ff453a;
+            color: #ff453a;
+            font-weight: bold;
+            border-radius: 6px;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
         /* Chân trang */
         footer {
             background-color: #222;
@@ -195,10 +200,8 @@
 </head>
 <body>
 
-    <!-- Thanh tiêu đề điều hướng -->
     <header>
         <div class="logo-area">
-            <img src="avatar.jfif" alt="Avatar Web" class="avatar-web">
             <h1>WORLD CUP 2026</h1>
         </div>
         <nav>
@@ -210,10 +213,8 @@
         </nav>
     </header>
 
-    <!-- Nội dung chính -->
     <div class="container">
 
-        <!-- Phần 1: Giới thiệu và hình ảnh -->
         <section id="intro" class="intro-section">
             <h2 class="intro-title">Chào Mừng Đến Với Ngày Hội Bóng Đá Lớn Nhất Hành Tinh</h2>
             <p style="text-align: center; max-width: 800px; margin: 0 auto; color: #666;">
@@ -221,36 +222,35 @@
             </p>
             
             <div class="image-gallery">
-                <!-- Ảnh giới thiệu World Cup (Cập nhật đường dẫn mới) -->
                 <div class="img-card">
-                    <img src="web/noi_dung/wc.jfif" alt="Giới thiệu World Cup">
+                    <img src="wc.jfif" alt="Giới thiệu World Cup">
                     <div class="img-caption">Cúp Vàng Danh Giá World Cup</div>
                 </div>
-                <!-- Ảnh lịch thi đấu (Cập nhật đường dẫn mới) -->
                 <div class="img-card">
-                    <img src="web/noi_dung/lichthidau.png" alt="Lịch thi đấu World Cup">
+                    <img src="lichthidau.png" alt="Lịch thi đấu World Cup">
                     <div class="img-caption">Lịch Thi Đấu & Sơ Đồ Vòng Loại</div>
                 </div>
             </div>
         </section>
 
-        <!-- Phần 2: Video ở giữa trang -->
         <section id="video" class="video-section">
             <h2>KHOẢNH KHẮC ẤN TƯỢNG</h2>
             <p style="margin-bottom: 25px; opacity: 0.9;">Cùng thưởng thức những pha bóng siêu kinh điển và không khí sôi động.</p>
             
             <div class="video-wrapper">
-                <!-- Thẻ phát video cục bộ -->
-                <video controls poster="web/noi_dung/wc.jfif">
+                <video controls poster="wc.jfif">
                     <source src="japanvshalan.mp4" type="video/mp4">
                     Trình duyệt của bạn không hỗ trợ thẻ phát video trực tiếp.
                 </video>
+            </div>
+
+            <div class="warning-text">
+                Không Nên Cá Độ da bóng chay qua lien tuc
             </div>
         </section>
 
     </div>
 
-    <!-- Chân trang -->
     <footer>
         <p>&copy; 2026 Trang Web Hâm Mộ Bóng Đá World Cup. Được thiết kế trực quan và hiện đại.</p>
     </footer>
